@@ -1,0 +1,27 @@
+*{
+	font-family: Verdana;
+}
+
+.title{
+	padding: 1rem;
+	font-weight: bolder;
+	font-variant: small-caps;
+	font-size: 2rem; 
+	text-align: center;
+}
+
+.subtitle{
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	padding-left: 2rem;
+	padding-right: 2rem;
+	font-variant: small-caps;
+	font-size: 1.2rem;
+}
+
+.text{
+	padding-top: .5rem;
+	padding-bottom: .5rem;
+	padding-left: 6rem;
+	padding-right: 6rem;
+}
