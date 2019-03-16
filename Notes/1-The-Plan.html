@@ -7,31 +7,114 @@
 
 	<body>
 	
+		<div class="big-title">
+			The Plan
+			</br>
+			Generic Text Adventure
+		</div>
+	
+		<div class="title">
+			Motivation
+		</div>
+		
+			<div class="subtitle">
+				What
+			</div>
+			<div class="text">
+				Generic-Text-Adventure seeks to provide a simple way to create a text adventure game given a series of text documents and pointers
+				within them (or something like that).
+				
+				This is inspired by Twine 2.
+			</div>
+			
+			<div class="subtitle">
+				Why
+			</div>
+			<div class="text">
+				It is easy to create a single text adventure, where the branching paths and decisions are hard-coded into the file. However, creating
+				a system that is able to generate any text adventure with user input is a more difficult task.
+			</div>
+			
+			<div class="subtitle">
+				Who
+			</div>
+			<div class="text">
+				This expects users to be familiar with very basic web programming if the user wants to change the CSS of the text adventure and to be
+				capable of following specific rules for determining variables, choices, etc., but not want to worry with the implementation of a text
+				adventure. 
+			</div>
+			
+			<div class="subtitle">
+				With What
+			</div>
+			<div class="text">
+				This will mainly be made with Javascript, HTML, and CSS.
+			</div>
+			
 		<div class="title">
 			Overview
 		</div>
 		
-		<div class="subtitle">
-			What
-		</div>
-		<div class="text">
-			Generic-Text-Adventure seeks to provide a simple way to create a text adventure game given a series of text documents and pointers
-			within them (or something like that).
+			<div class="text">
+				At its core, Generic-Text-Adventure is about organized text processing. The high-level organization will likely change once it's
+				further developed, but these are the loose ideas.
+			</div>
+		
+			<div class="subtitle">
+				Hierarchy
+			</div>
+			<div class="text">
+				The organization for the Text-Adventure is as follows:
+					<ol>
+						<li> Game </li>
+						<li> Acts </li>
+						<li> Scenes </li>
+						<li> Snippets </li>
+					</ol>
+				Twine 2 doesn't use this organization system, and only uses "Snippets" to connect the story. This is a good system to use for shorter
+				and less linear stories, where the story is not neatly separated into separate parts. However, the benefit that propels this idea is
+				for users to not have to look through bulky lists of text files in order to edit and add onto specific elements of their story. Even
+				more abstract and non-linear stories might be able to separate their narrative based on unique organization (ex: stories with a time
+				mechanic could separate scenes into time increments).
+			</div>
+			<div class="text">
+				A Snippet is the smallest piece of the text adventure. They are the nodes of a graph, connected by the branching choices within one
+				Snippet. When at the end of the Scene, a Snippet will transition from one Scene to another that does not necessarily have to be
+				chronological.
+			</div>
+			<div class="text">
+				A Scene are purely for organizational purposes, storing the Snippets within a proper containers. Transitioning from Scene to Scene
+				does not directly give a pointer from one Scene to another. Instead, each Scene will be given a starting Snippet that the User will
+				go to.
+			</div>
+			<div class="text">
+				The same applies to Acts, except that it will be given a starting Scene, which will also be given a starting Snippet. While this might
+				seem debilitating to those who want to start the Act at different Scenes, or the Scene at different Snippets, the entire point of these
+				distinctions is to segregate the different aspects of the story into different uniform parts. From there, there could be different
+				text inside the Snippet, as well as drastically different Snippets from the stating position.
+			</div>
 			
-			This is inspired by Twine 2.
-		</div>
 		<div class="subtitle">
-			Why
+			User
 		</div>
 		<div class="text">
-			It is easy to create a single text adventure, where the branching paths and decisions are hard-coded into the file. However, creating
-			a system that is able to generate any text adventure with user input is a more difficult task.
+			The user will be represented as a single Snippet Node. As it traverses throughout the Snippets, it will not have any memory of the pervious
+			Snippet, nor any knowledge of what the next Snippets are other than the pointer to them.
 		</div>
+
+	<div class="title">
+		Implementation Description
+	</div>
 		<div class="subtitle">
-			With What
+			Anatomy of a Snippet
 		</div>
 		<div class="text">
-			This will only be made with Javascript, HTML, CSS, etc.
+		</div>
+			
+		<div class="subtitle">
+			State
+		</div>
+		<div class="text">
 		</div>
 	</body>
 </html>
