@@ -127,11 +127,36 @@
 			Variable text is dependent on previous choices made, and is directly linked with the State (to be later described). If the character is
 			male, he will be described using "he" and "him," while a female narrator is described with "she" and "her."
 		</div>
+		<div class="text">
+			Plain text is non-clickable text presented to the reader.
+			
+			Choice text is clickable, and sends the user from one Snippet to another.
+		</div>
+		<div class="text">
+			The challenge of the different types of Snippets is to create the most flexible and simple design to encapsulate every combination
+			of options. Though I'm not entirely sure if this is the best way to handle the situation, choices that affect variable text will
+			at this time have their own Action/Consequence class that lists the changes to the variable text. If variable text is not defined,
+			it will be left as blank in the Snippet. This has the main drawback of putting the burden of correct logic entirely on the user,
+			and most likely making error checking of variables a difficult task, but this is the solution that makes the most sense to me at this
+			current time.
+		</div>
 			
 		<div class="subtitle">
 			State
 		</div>
 		<div class="text">
+			The purpose of the state is to remember user choices, regardless of whether they lead to a different Snippet or not, for
+			the benefit of variable text. Since the system does not remember the nodes that came before it, or know the content of the
+			nodes after it, having a state is essential.
+		
+			However, he state is something I'm not entirely sure what to do with. There are three methods of varying quality to structure
+			the State:
+			
+			<ol>
+				<li> A global singleton state </li>
+				<li> A local state that passes from Scene to Scene </li>
+				<li> One global state with multiple state buffers within each Scene </li>
+			</ol>
 		</div>
 	</body>
 </html>
