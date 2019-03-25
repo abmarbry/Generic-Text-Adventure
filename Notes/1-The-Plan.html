@@ -73,7 +73,7 @@
 					</ol>
 				Twine 2 doesn't use this organization system, and only uses "Snippets" to connect the story. This is a good system to use for shorter
 				and less linear stories, where the story is not neatly separated into separate parts. However, the benefit that propels this idea is
-				for users to not have to look through bulky lists of text files in order to edit and add onto specific elements of their story. Even
+				for users to not have to look through bulky lists of files in order to edit and add onto specific elements of their story. Even
 				more abstract and non-linear stories might be able to separate their narrative based on unique organization (ex: stories with a time
 				mechanic could separate scenes into time increments).
 			</div>
@@ -132,13 +132,48 @@
 			
 			Choice text is clickable, and sends the user from one Snippet to another.
 		</div>
+		
+				
 		<div class="text">
 			The challenge of the different types of Snippets is to create the most flexible and simple design to encapsulate every combination
-			of options. Though I'm not entirely sure if this is the best way to handle the situation, choices that affect variable text will
-			at this time have their own Action/Consequence class that lists the changes to the variable text. If variable text is not defined,
-			it will be left as blank in the Snippet. This has the main drawback of putting the burden of correct logic entirely on the user,
-			and most likely making error checking of variables a difficult task, but this is the solution that makes the most sense to me at this
-			current time.
+			of options. Variable text itself is only stored within a Snippet, while the variable that the text changes based on is stored in the
+			State (see later). This currently puts the burden of text-defining logic on the user at this point, and requires that they have enough
+			CS background knowledge to complete basic if/else statements. This might change to something more user-friendly as the system progresses.
+		</div>
+		
+		<div class="subtitle">
+			Path to a Concrete Snippet
+		</div>
+		
+		<div class="text">
+			Originally, I had intended to purely use the .txt format for the user to generate the different Snippets within their story.
+			This raised a number of questions: How would the file contain its choices? How would it signal to the state any changes it makes?
+			What if a choice led to more complicated actions?
+		</div>
+		
+		<div class="text">
+			Currently, I think a better solution would be to store the data of a Snippet entirely within a .json file for the system's first
+			version. I imagine it containing the following subsections:
+			
+			<ul>
+				<li> Text </li>
+				<li> Choice Key </li>
+					<ul>
+						<li> Name </li>
+						<li> Consequences </li>
+					</ul>
+				<li> Variable Key </li>
+				<li> Metadata </li>
+			</ul>
+		</div>
+		
+		<div class="text">
+			Text is what the user will actually see, and the prose aspect of the Snippet. Within the text, it will reference variables and
+			choices (perhaps with LaTeX-like syntax) that the system can look up in the Variable Key and Choice Key. The system will have to
+			determine which piece of Variable Text to use before presenting the document, while the Consequences of a choice won't matter
+			unless the user selects it. I'm using Metadata as a current catch-all for data that will need to be stored in order for the system
+			to operate as intended. An example of this could be changing the text speed or style for a particular Snippet, or maybe its background
+			color.
 		</div>
 			
 		<div class="subtitle">
@@ -146,10 +181,11 @@
 		</div>
 		<div class="text">
 			The purpose of the state is to remember user choices, regardless of whether they lead to a different Snippet or not, for
-			the benefit of variable text. Since the system does not remember the nodes that came before it, or know the content of the
-			nodes after it, having a state is essential.
+			the benefit of variable text. The user's choices will be called variables, and it does not represent the variable text, but
+			only a user's choice, such as "pressedButton" or "insultUsed." Since the system does not remember the nodes that came before
+			it, or know the content of the nodes after it, having a state is essential.
 		
-			However, he state is something I'm not entirely sure what to do with. There are three methods of varying quality to structure
+			However, the state is something I'm not entirely sure what to do with. There are three methods of varying quality to structure
 			the State:
 			
 			<ol>
@@ -157,6 +193,21 @@
 				<li> A local state that passes from Scene to Scene </li>
 				<li> One global state with multiple state buffers within each Scene </li>
 			</ol>
+			
+			A global singleton is beneficial when the variables do not change often throughout the Snippets, and when the variables are not
+			used frequently enough for a global variable retrieval to be more expensive than using a buffer. Higher coupling would also occur.
+			</br>
+			A local state is beneficial when variables are highly depedent on the specific Scene, and rarely used outside of one Scene. Act-scope
+			or Global values would need to be copied from Scene to Scene, which would quickly become an expensive process, and complicate the
+			act of storing a variable.
+			</br>
+			The global state and buffer would be a happy medium between the two. Variables limited to the scene would have no need to exit the 
+			buffer, and fetched global variables can remain in the buffer to be thrown away once the Scene is over.
+			</div>
+		<div class="text">
+			
+			There is also the question of whether the variables within the state should be pre-defined, or if the user needs to define them
+			in a separate document.
 		</div>
 	</body>
 </html>
