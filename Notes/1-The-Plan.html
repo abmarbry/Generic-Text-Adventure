@@ -232,12 +232,20 @@
 		<div class="text">
 			
 			There is also the question of whether the variables within the state should be freely-inserted, or if the user needs to define them
-			explicitly. 
+			explicitly. Because the state will not change its variables at run time, it makes sense to have them be explicitly defined. However,
+			this breaks a main benefit of the system, which is that it is only considers the present so that it does not load more than it needs
+			to. With this in mind, the State should not have pre-defined variables, putting the burden of making sure a variable exists before
+			referring to it on the user. The processing of which values go where should be handled by a State Bus, while the actual inserting
+			should be handled by the state.
 		</div>
 		
-				<div class="subtitle">
-			The User
-		</div>
+	<div class="title">
+		Next Steps
+	</div>
+	<div class="text">
+		The first hurdle is to create a class that can take .json file of information, and correctly translate it into a functioning Snippet.
+		Next, the goal will be to implement moving from one Snippet to the other. Only after that will States and Scenes be important
+		implementation-wise.
 		
 	</body>
 </html>
