@@ -1,4 +1,5 @@
 $( document ).ready(function() {
+	//TO DO: Determine first JSON document to be fetched, add as parameter
 	fetchJSON();
 });
 
@@ -14,7 +15,7 @@ var fetchJSON = function() {
 	
 	$.getJSON(getFileName())
     .done(function(json) {
-		loadFirstSnippet(json);
+		loadSnippet(json);
     })
     .fail(function(e) {
 		console.log(e);
@@ -23,12 +24,19 @@ var fetchJSON = function() {
 };	
 
 var getFileName = function(){
-	//TO DO
+	//TO DO: Determine which part of the act/story the user is at
 	return "Game_Content/Story/000.json";
 };
 
-var loadFirstSnippet = function(json){
+var loadSnippet = function(json){
 	var rawData = json;
 	
-	console.log(rawData);
+	//Insert putting data into Processor object,
+	//calling something like Processor.getOutput() that returns HTML
+	
+	insertIntoDocument(rawData.body);
+}
+
+var insertIntoDocument = function(data) {
+	$("#snippet").html(data);
 }

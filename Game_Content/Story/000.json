@@ -1,4 +1,33 @@
 {
-	"text": "This is example text",
-	"text2": "This is second example text"
+	"body": [
+		"This is example text.",
+		"You now have a choice to make:",
+		"You can pick \choice{0} or \choice{1}"
+	],
+	"choices": {
+		isPopulated: true,
+		content: [
+			{
+				"id": "0",
+				"name": "Go to second Snippet",
+				"nextSnippet", "001",
+				"consequences": {
+					"Sassy" : false,
+					"Name" : "Non-Sassy Master"
+				}
+			},
+			{
+				"id": "1",
+				"name": "Go to second Snippet, but make it sassy",
+				"nextSnippet", "001",
+				"consequences": {
+					"Sassy" : true,
+					"Name" : "Sass Master"
+				}
+			}
+			
+		]
+	"variables": {
+		isPopulated: false
+	}
 }

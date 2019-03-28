@@ -28,6 +28,30 @@
 					the paged housed a series of stories within a single page. For now the user would just directly enter this into the file, which 
 					requires more CS knowledge but nothing more complex than is already required in this first version.
 				</li>
+				<li>
+					The json document has changed in appearance significantly:
+						<ul>
+							<li>String[] body</li>
+							<li>Object choices</li>
+								<ul>
+									<li>String id</li>
+									<li>String name</li>
+									<li>String nextSnippet</li>
+									<li>Object consequences</li>
+										<ul>
+											(boolean, String, int, etc..) variable assignments
+										</ul>
+								</ul>
+							<li>Object variables</li>
+								<ul>
+									<li>String id</li>
+									<li>Object body</li>
+										<ul>
+											<li>outcome organized by variable value</li>
+										</ul>
+								</ul>
+						</ul>
+				</li>
 			</ul>
 	</body>
 </html>
