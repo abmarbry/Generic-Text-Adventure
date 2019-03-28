@@ -31,6 +31,8 @@ var getFileName = function(){
 var loadSnippet = function(json){
 	var rawData = json;
 	
+	
+	
 	//Insert putting data into Processor object,
 	//calling something like Processor.getOutput() that returns HTML
 	
