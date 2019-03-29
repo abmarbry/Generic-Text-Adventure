@@ -23,10 +23,7 @@
 		<div class="text">
 			<ul>
 				<li>
-					The title of the html file will need to be determined before runtime so that the user's readers could search for the story (as 
-					opposed to having it be determined from the very first file in the processor, while I briefly entertained. That would only work if
-					the paged housed a series of stories within a single page. For now the user would just directly enter this into the file, which 
-					requires more CS knowledge but nothing more complex than is already required in this first version.
+					The title of the html file will need to be determined before runtime so that the user's readers could search for the story (as opposed to having it be determined from the very first file in the processor, while I briefly entertained. That would only work if the paged housed a series of stories within a single page. For now the user would just directly enter this into the file, which  requires more CS knowledge but nothing more complex than is already required in this first version.
 				</li>
 				<li>
 					The json document has changed in appearance significantly:
@@ -51,6 +48,12 @@
 										</ul>
 								</ul>
 						</ul>
+				</li>
+				<li>
+					Should Processor put the data onto the document as well as translate it? Having to return the HTML results in a higher amount of coupling. However, cohesion states that a class should do only one thing, and having it print to the screen as well is blob-y.
+				</li>
+				<li>
+					It's probably a good idea to delegate file fetching and folder transitioning to another class.
 				</li>
 			</ul>
 	</body>

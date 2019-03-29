@@ -10,7 +10,11 @@
 			{
 				"id": "0",
 				"name": "Go to second Snippet",
-				"nextSnippet", "001",
+				"nextSnippet": "001",
+				"transition": {
+					"transitionsScenes": false,
+					"transitionsAct": false
+				},
 				"consequences": {
 					"Sassy" : false,
 					"Name" : "Non-Sassy Master"

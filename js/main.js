@@ -23,6 +23,12 @@ var fetchJSON = function() {
     });
 };	
 
+var goTo = function(json){
+	/*
+		1) getFileName()
+	*/
+}
+
 var getFileName = function(){
 	//TO DO: Determine which part of the act/story the user is at
 	return "Game_Content/Story/000.json";
