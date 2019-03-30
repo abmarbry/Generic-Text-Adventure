@@ -1,8 +1,6 @@
-function Processor (){
-	
-}
+var Processor = {};
 
-Processor.prototype.translate = function(rawData){
+Processor.translate = function(rawData){
 	/*
 		1) Fetch word in "body"
 		2) If end of String, make paragraph break
@@ -13,4 +11,8 @@ Processor.prototype.translate = function(rawData){
 		6) Go to 1) until exit condition is met
 	*/
  };
+ 
+export default Processor;
+ 
+
  

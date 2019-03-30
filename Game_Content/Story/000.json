@@ -2,11 +2,11 @@
 	"body": [
 		"This is example text.",
 		"You now have a choice to make:",
-		"You can pick \choice{0} or \choice{1}"
+		"You can pick <CHOICE(0)> or <CHOICE(1)>"
 	],
 	"choices": {
-		isPopulated: true,
-		content: [
+		"isPopulated": true,
+		"content": [
 			{
 				"id": "0",
 				"name": "Go to second Snippet",
@@ -23,7 +23,11 @@
 			{
 				"id": "1",
 				"name": "Go to second Snippet, but make it sassy",
-				"nextSnippet", "001",
+				"nextSnippet": "001",
+				"transition": {
+					"transitionsScenes": false,
+					"transitionsAct": false
+				},
 				"consequences": {
 					"Sassy" : true,
 					"Name" : "Sass Master"
@@ -31,7 +35,8 @@
 			}
 			
 		]
+	},
 	"variables": {
-		isPopulated: false
+		"isPopulated": false
 	}
 }
