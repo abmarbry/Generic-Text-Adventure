@@ -1,4 +1,4 @@
-import * as processor from "./processor.js";
+import Processor from "./processor.js";
 
 $( document ).ready(function() {
 	
@@ -29,7 +29,11 @@ var fetchJSON = function(fileName) {
 	
 
 var loadSnippet = function(json){
-	var rawData = json;
+	
+	
+	var processor = new Processor();
+	
+	processor.translate(json);
 	
 	//Insert putting data into Processor object,
 	
