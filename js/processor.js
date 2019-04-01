@@ -5,17 +5,19 @@ function Processor (){};
 
 Processor.prototype.translate = function(json){
 	var body = json.body;
-	console.log(body);
 	var bodyPos = 0;
-	var bodyLength = body.length;
 	
-	while( bodyPos < bodyLength){
+	var fetcher = new WordFetcher(body[bodyPos]);
+
+	while(bodyPos < body.length){
 		
 		var fetcher = new WordFetcher(body[bodyPos]);
 		while(!fetcher.isEmpty()){
 			var word = fetcher.next();
+			console.log(word);
 		}
 		
+		bodyPos++;
 	}
 	
 	/*
@@ -33,18 +35,46 @@ Processor.prototype.translate = function(json){
 //WORD FETCHER
 function WordFetcher(string){
 	this.string = string;
-	this.stringPos = 0;
+	this.pos = 0;
 }
 
 WordFetcher.prototype.next = function(){
-	//TO DO
-	return "";
+	var wordFound = false;
+	var pos = this.pos;
+	var string = this.string;
+	
+	while(!wordFound && pos < string.length) {
+		var c = string.charAt(pos);
+		if(c === ' '){
+			pos++;
+			c = string.charAt(pos);
+		}
+		else {
+			wordFound = true;
+		}
+	}
+	
+	if(!wordFound){
+		return "";
+	}
+	else{
+		var end = pos;
+		while(c !== ' ' && end < string.length){
+			c = string.charAt(end);
+			end++;
+		}
+		
+		var word = string.substring(pos, end);
+		this.pos = end;
+		
+		return word;
+	}
 }
 
 WordFetcher.prototype.isEmpty = function(){
-	//TO DO
-	return true;
+	return !(this.pos < this.string.length);
 }
+//WORD FETCHER END
  
 
 export default Processor;
