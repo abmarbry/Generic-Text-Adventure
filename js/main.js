@@ -1,4 +1,5 @@
 import Processor from "./processor.js";
+import Snippet from "./snippet.js";
 
 $( document ).ready(function() {
 	
@@ -31,12 +32,9 @@ var loadSnippet = function(json){
 	
 	
 	var processor = new Processor();
+	var snippet = processor.translate(json);
 	
-	processor.translate(json);
-	
-	//Insert putting data into Processor object,
-	
-	//insertIntoDocument(Processor.getOutput());
+	insertIntoDocument(snippet.get());
 };
 
 var goTo = function(fileName){

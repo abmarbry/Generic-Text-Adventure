@@ -7,14 +7,16 @@ Snippet.prototype.add = function(string){
 }
 
 Snippet.prototype.addBreak = function(){
-	this.htmlStrings.push("</br>");
+	this.htmlStrings.push("</br></br>");
 }
 
 
 Snippet.prototype.get = function(){
-	//TO DO
-	//After implementing, ensure proper spaces between words.
-	return this.htmlStrings;
+	var body = "";
+	this.htmlStrings.forEach(function(string){
+		body += string + ' ';
+	});
+	return body;
 }
 
 export default Snippet;

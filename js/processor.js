@@ -88,6 +88,8 @@ Processor.prototype.translate = function(json){
 		bodyPos++;
 	}
 	
+	return Processor.snippet;
+	
 	/*
 		X	1) Fetch word in "body"
 		X	2) If end of String, make paragraph break
