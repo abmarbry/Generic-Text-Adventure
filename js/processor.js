@@ -46,7 +46,7 @@ function Processor (){
 	
 
 	Processor.handleAndInsert = function(json, word){
-		var parsedHTML = word;
+		var parsedHtml = word;
 		
 		//TO DO LATER: Handle if there's a choice / variable in the body, but none in the actual JSON
 		if(Processor.isChoiceOrVariable(word)){
@@ -55,14 +55,14 @@ function Processor (){
 				var choiceData = Processor.findChoiceContent(json.choices.content, id);
 				
 				var choice = new Choice(choiceData);
-				Processor.snippet.pushHTMLChoice(choice.getNextSnippetString(), choice.getConsequences(), choice.getBody());
+				Processor.snippet.pushHtmlChoice(choice.getNextSnippetString(), choice.getConsequences(), choice.getBody());
 			}
 			else if (Processor.isVariable(word)){
 				//TO DO: Extract variable, insert into wordFetcher, handleAndInsert again
 			}
 		}
 		else{
-			Processor.snippet.add(parsedHTML);
+			Processor.snippet.add(parsedHtml);
 		}
 	}
 	 

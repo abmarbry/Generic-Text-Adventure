@@ -1,6 +1,9 @@
 import Processor from "./processor.js";
 import Snippet from "./snippet.js";
 
+//singleton that I too wish it wasn't global
+var snippet;
+
 $( document ).ready(function() {
 	
 	//TO DO: Determine first JSON document to be fetched, add as parameter
@@ -8,6 +11,7 @@ $( document ).ready(function() {
 	
 	//locator.getLocation()
 	fetchJSON("../Game_Content/Story/000.json");
+	
 });
 
 var fetchJSON = function(fileName) {
@@ -32,13 +36,21 @@ var loadSnippet = function(json){
 	
 	
 	var processor = new Processor();
-	var snippet = processor.translate(json);
+	snippet = processor.translate(json);
 	
-	insertIntoDocument(snippet.get());
+	insertIntoDocument(snippet.getHtml());
+	setChoiceListeners();
+//	document.getElementById("btnsave").addEventListener ("click", resetEmotes, false);
 };
 
+var handleChoice = function(index){
+	var choiceParameters = snippet.getChoiceParameters(index);
+	console.log(choiceParameters);
+}
+
+/*
 var goTo = function(fileName){
-	/*
+	
 		TO DO: Delegate to Locator using Snippet data as input?
 		
 		1) If not exiting Scene, fetchJSON(fileName)
@@ -46,9 +58,15 @@ var goTo = function(fileName){
 			a) go to correct pathname
 			b) find metadata on act/scene/snippet
 			c) fetchJSON(fileName)
-	*/
-};
+	
+};*/
+
+var setChoiceListeners = function(){
+	$('.choice').click(function(e){
+		handleChoice(e.target.id);
+	})
+}
 
 var insertIntoDocument = function(data) {
 	$("#snippet").html(data);
-};
+}; 
