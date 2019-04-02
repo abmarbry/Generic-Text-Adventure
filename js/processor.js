@@ -1,34 +1,37 @@
-//Line 2 or 4, which one is better?
-//var Processor = {};
-
 function Processor (){
 	Processor.htmlStrings = [];
 	
 	//Helper Functions
+	
 	Processor.processString = function(json, string){
 		var fetcher = new WordFetcher(string);
 			while(!fetcher.isEmpty()){
 				var word = fetcher.next();
-				console.log("/" + word + "/");
 				//TO DO: minimize json data sent
 				Processor.handleAndInsert(json, word);
 			}
 	}
+	
 
 	Processor.handleAndInsert = function(json, word){
 		var parsedHTML = word;
 		
+		//TO DO LATER: If there's a choice / variable in the body, but none in the actual JSON
 		if(Processor.isChoiceOrVariable(word)){
 			if(Processor.isChoice(word)){
-				//TO DO: Process choice and consequences
+				console.log(word);
+				var id = Processor.findInnerID(word);
+				var data = Processor.findChoiceContent(json.choices.content, id);
+				
+				//var choice = new Choice(data);
+				//parsedHTML = choice.getHTML();
 			}
 			else if (Processor.isVariable(word)){
 				//TO DO: Extract variable, insert into wordFetcher, handleAndInsert again
 			}
 		}
 		
-		Processor.addHTML(parsedHTML);
-		//TO DO
+//		Processor.addHTML(parsedHTML);
 	}
 	 
 	 
@@ -36,24 +39,47 @@ function Processor (){
 		//TO DO LATER: possible fix somewhere for splitting a word if there's a \t or something at the end
 		return (word.charAt(0) === '<' && word.charAt(word.length-1) === '>');
 	}
+	
 
 	Processor.isChoice = function(word){
-		return false;
+		var bigWord = word.toUpperCase();
+		return (bigWord.indexOf("CHOICE") !== -1); 
 	}
+	
 
 	Processor.isVariable = function(word){
-		return false;
+		var bigWord = word.toUpperCase();
+		return (bigWord.indexOf("VARIABLE") !== -1); 
 	}
+	
+	
+	Processor.findInnerID = function(word){
+		var start = word.indexOf("(")+1;
+		var end = word.lastIndexOf(")");
+		
+		return word.substring(start, end);
+	}
+	
+	
+	Processor.findChoiceContent = function(data, id){
+		$.each(data, function(key, value){
+			if(value.id === id){
+				console.log(value);
+				return value;
+			}
+		})
+	}
+	
 
 	Processor.addHTML = function(string){
 		console.log(this.htmlStrings);
 		this.htmlStrings.push(string);
 	}
+	
 
 	Processor.addBreak = function(){
 		this.htmlStrings.push("</br>");
 	}
-	
 };
 
 
@@ -79,6 +105,12 @@ Processor.prototype.translate = function(json){
 			6) Go to 1) until exit condition is met
 	*/
 };
+
+
+
+//CHOICE
+function Choice(){
+}
 
 
 
