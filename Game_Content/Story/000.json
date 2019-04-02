@@ -12,8 +12,12 @@
 				"name": "Go to second Snippet",
 				"nextSnippet": "001",
 				"transition": {
-					"transitionsScenes": false,
-					"transitionsAct": false
+					"toScene": {
+						"isPopulated": false
+					},
+					"toAct": {
+						"isPopulated": false
+					}
 				},
 				"consequences": {
 					"Sassy" : false,
@@ -25,8 +29,12 @@
 				"name": "Go to second Snippet, but make it sassy",
 				"nextSnippet": "001",
 				"transition": {
-					"transitionsScenes": false,
-					"transitionsAct": false
+					"toScene": {
+						"isPopulated": false
+					},
+					"toAct": {
+						"isPopulated": false
+					}
 				},
 				"consequences": {
 					"Sassy" : true,

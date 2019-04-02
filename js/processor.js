@@ -1,4 +1,5 @@
 import Snippet from "./snippet.js";
+import Choice from "./choice.js";
 
 Processor.prototype.translate = function(json){
 	var body = json.body;
@@ -47,20 +48,22 @@ function Processor (){
 	Processor.handleAndInsert = function(json, word){
 		var parsedHTML = word;
 		
-		//TO DO LATER: If there's a choice / variable in the body, but none in the actual JSON
+		//TO DO LATER: Handle if there's a choice / variable in the body, but none in the actual JSON
 		if(Processor.isChoiceOrVariable(word)){
 			if(Processor.isChoice(word)){
 				var id = Processor.findInnerID(word);
-				var data = Processor.findChoiceContent(json.choices.content, id);
+				var choiceData = Processor.findChoiceContent(json.choices.content, id);
 				
-				//var choice = new Choice(data);
-				//parsedHTML = choice.getHTML();
+				var choice = new Choice(choiceData);
+				Processor.snippet.pushHTMLChoice(choice.getNextSnippetString(), choice.getConsequences(), choice.getBody());
 			}
 			else if (Processor.isVariable(word)){
 				//TO DO: Extract variable, insert into wordFetcher, handleAndInsert again
 			}
 		}
-		Processor.snippet.add(parsedHTML);
+		else{
+			Processor.snippet.add(parsedHTML);
+		}
 	}
 	 
 	 
@@ -91,24 +94,17 @@ function Processor (){
 	
 	
 	Processor.findChoiceContent = function(data, id){
+		//TO DO: inefficient, iterates through all choices & doesn't account for name not existing
+		var correct;
 		$.each(data, function(key, value){
 			if(value.id === id){
-				console.log(value);
-				return value;
+				correct = value;
 			}
-		})
+		});
+		return correct;
 	}
 	
 };
-
-
-
-
-
-//CHOICE
-function Choice(){
-}
-
 
 
 

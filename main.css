@@ -5,3 +5,11 @@
 .padding{
     padding: 4rem;
 }
+
+.choice{
+	color: teal;
+}
+
+.choice:hover{
+	color: navy;
+}
