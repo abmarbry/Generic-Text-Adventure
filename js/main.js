@@ -19,7 +19,6 @@ var fetchJSON = function(fileName) {
 	})
     .done(function(data) {
 		var json = $.parseJSON(data);
-		console.log(json);
 		loadSnippet(json);
     })
     .fail(function(e) {

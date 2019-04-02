@@ -1,8 +1,12 @@
+import Snippet from "./snippet.js";
+
 function Processor (){
 	Processor.htmlStrings = [];
 	
-	//Helper Functions
+	Processor.snippet = new Snippet();
 	
+	
+	//HELPER FUNCTIONS
 	Processor.processString = function(json, string){
 		var fetcher = new WordFetcher(string);
 			while(!fetcher.isEmpty()){
@@ -19,7 +23,6 @@ function Processor (){
 		//TO DO LATER: If there's a choice / variable in the body, but none in the actual JSON
 		if(Processor.isChoiceOrVariable(word)){
 			if(Processor.isChoice(word)){
-				console.log(word);
 				var id = Processor.findInnerID(word);
 				var data = Processor.findChoiceContent(json.choices.content, id);
 				
@@ -30,8 +33,7 @@ function Processor (){
 				//TO DO: Extract variable, insert into wordFetcher, handleAndInsert again
 			}
 		}
-		
-//		Processor.addHTML(parsedHTML);
+		Processor.snippet.add(parsedHTML);
 	}
 	 
 	 
@@ -70,17 +72,8 @@ function Processor (){
 		})
 	}
 	
-
-	Processor.addHTML = function(string){
-		console.log(this.htmlStrings);
-		this.htmlStrings.push(string);
-	}
-	
-
-	Processor.addBreak = function(){
-		this.htmlStrings.push("</br>");
-	}
 };
+
 
 
 
@@ -91,7 +84,7 @@ Processor.prototype.translate = function(json){
 
 	while(bodyPos < body.length){	
 		Processor.processString(json, body[bodyPos]);
-		Processor.addBreak();		
+		Processor.snippet.addBreak();		
 		bodyPos++;
 	}
 	
@@ -102,15 +95,19 @@ Processor.prototype.translate = function(json){
 			3) Else if choice, process choice consequences
 			4) Else if variable, insert variable accordingly
 			5) Else, normal word, paste accordingly
-			6) Go to 1) until exit condition is met
+		X	6) Go to 1) until exit condition is met
 	*/
 };
+
+
 
 
 
 //CHOICE
 function Choice(){
 }
+
+
 
 
 

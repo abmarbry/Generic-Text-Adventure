@@ -1,13 +1,20 @@
-
-
-/*Snippet.addToBody = function(text){
+function Snippet(){
+	this.htmlStrings = [];
 }
 
-Snippet.addParagraphBreak = function(){
+Snippet.prototype.add = function(string){
+	this.htmlStrings.push(string);
 }
 
-Snippet.addChoice = function() {
+Snippet.prototype.addBreak = function(){
+	this.htmlStrings.push("</br>");
 }
 
-Snippet.returnBody(){
-}*/
+
+Snippet.prototype.get = function(){
+	//TO DO
+	//After implementing, ensure proper spaces between words.
+	return this.htmlStrings;
+}
+
+export default Snippet;
