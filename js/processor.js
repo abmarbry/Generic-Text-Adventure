@@ -2,25 +2,70 @@
 //var Processor = {};
 
 function Processor (){
-	this.htmlStrings = [];
+	Processor.htmlStrings = [];
+	
+	//Helper Functions
+	Processor.processString = function(json, string){
+		var fetcher = new WordFetcher(string);
+			while(!fetcher.isEmpty()){
+				var word = fetcher.next();
+				console.log("/" + word + "/");
+				//TO DO: minimize json data sent
+				Processor.handleAndInsert(json, word);
+			}
+	}
+
+	Processor.handleAndInsert = function(json, word){
+		var parsedHTML = word;
+		
+		if(Processor.isChoiceOrVariable(word)){
+			if(Processor.isChoice(word)){
+				//TO DO: Process choice and consequences
+			}
+			else if (Processor.isVariable(word)){
+				//TO DO: Extract variable, insert into wordFetcher, handleAndInsert again
+			}
+		}
+		
+		Processor.addHTML(parsedHTML);
+		//TO DO
+	}
+	 
+	 
+	Processor.isChoiceOrVariable = function(word){
+		//TO DO LATER: possible fix somewhere for splitting a word if there's a \t or something at the end
+		return (word.charAt(0) === '<' && word.charAt(word.length-1) === '>');
+	}
+
+	Processor.isChoice = function(word){
+		return false;
+	}
+
+	Processor.isVariable = function(word){
+		return false;
+	}
+
+	Processor.addHTML = function(string){
+		console.log(this.htmlStrings);
+		this.htmlStrings.push(string);
+	}
+
+	Processor.addBreak = function(){
+		this.htmlStrings.push("</br>");
+	}
+	
 };
+
+
+
 
 Processor.prototype.translate = function(json){
 	var body = json.body;
 	var bodyPos = 0;
-	
-	var fetcher = new WordFetcher(body[bodyPos]);
 
-	while(bodyPos < body.length){
-		
-		var fetcher = new WordFetcher(body[bodyPos]);
-		while(!fetcher.isEmpty()){
-			var word = fetcher.next();
-			//TO DO: minimize json data sent
-			handleAndInsert(json, word);
-		}
-		addBreak();
-		
+	while(bodyPos < body.length){	
+		Processor.processString(json, body[bodyPos]);
+		Processor.addBreak();		
 		bodyPos++;
 	}
 	
@@ -35,19 +80,8 @@ Processor.prototype.translate = function(json){
 	*/
 };
 
-function handleAndInsert(json, word){
-	//TO DO
-}
- 
- 
-function isChoiceOrVariable(word){
-	//TO DO LATER: possible fix somewhere for splitting a word if there's a \t or something at the end
-	return (word.charAt(0) === '<' && word.charAt(word.length-1) === '>');
-}
 
-function addBreak(){
-	this.htmlStrings.push("</br>");
-}
+
 
 //WORD FETCHER
 function WordFetcher(string){
@@ -76,9 +110,10 @@ WordFetcher.prototype.next = function(){
 	}
 	else{
 		var end = pos;
+		c = string.charAt(end);
 		while(c !== ' ' && end < string.length){
-			c = string.charAt(end);
 			end++;
+			c = string.charAt(end);
 		}
 		
 		var word = string.substring(pos, end);
