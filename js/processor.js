@@ -39,7 +39,7 @@ function Processor (){
 		var fetcher = new WordFetcher(string);
 			while(!fetcher.isEmpty()){
 				var word = fetcher.next();
-				//TO DO: minimize json data sent
+				//TO DO LATER: minimize json data sent
 				Processor.handleAndInsert(json, word);
 			}
 	}
@@ -55,7 +55,7 @@ function Processor (){
 				var choiceData = Processor.findChoiceContent(json.choices.content, id);
 				
 				var choice = new Choice(choiceData);
-				Processor.snippet.pushHtmlChoice(choice.getNextSnippetString(), choice.getConsequences(), choice.getBody());
+				Processor.snippet.addHtmlChoice(choice.getNextSnippetString(), choice.getConsequences(), choice.getBody());
 			}
 			else if (Processor.isVariable(word)){
 				//TO DO: Extract variable, insert into wordFetcher, handleAndInsert again
@@ -94,7 +94,7 @@ function Processor (){
 	
 	
 	Processor.findChoiceContent = function(data, id){
-		//TO DO: inefficient, iterates through all choices & doesn't account for name not existing
+		//TO DO LATER: inefficient, iterates through all choices & doesn't account for name not existing
 		var correct;
 		$.each(data, function(key, value){
 			if(value.id === id){

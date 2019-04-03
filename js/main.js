@@ -1,65 +1,50 @@
 import Processor from "./processor.js";
 import Snippet from "./snippet.js";
+import Locator from "./locator.js";
 
-//singleton that I too wish it wasn't global
+//singletons that I too wish it weren't global
 var snippet;
+var processor;
+var locator;
 
 $( document ).ready(function() {
 	
 	//TO DO: Determine first JSON document to be fetched, add as parameter
 	//TO DO: Remove constant when logic for finding files is implemented
-	
-	//locator.getLocation()
-	fetchJSON("../Game_Content/Story/000.json");
+	processor = new Processor();
+	locator = new Locator();
+	fetch("Act_1/Scene_1/000");
 	
 });
 
-var fetchJSON = function(fileName) {
-	
-	//TO DO: delegate to Locator?
-	
-	$.ajax({
-	dataType: "text",
-	url: fileName,
-	})
-    .done(function(data) {
+var fetch = function(pathWithoutExtension){
+	locator.fetchData(pathWithoutExtension).then(function(data){
 		var json = $.parseJSON(data);
+		console.log(json);
 		loadSnippet(json);
-    })
-    .fail(function(e) {
-		console.log(e);
-		});
-};
+	});
+}
 	
 
 var loadSnippet = function(json){
-	
-	
-	var processor = new Processor();
 	snippet = processor.translate(json);
 	
+	console.log(snippet);
+	
 	insertIntoDocument(snippet.getHtml());
+	//TO DO LATER: hopefully modularize the listeners more or something
 	setChoiceListeners();
-//	document.getElementById("btnsave").addEventListener ("click", resetEmotes, false);
 };
 
 var handleChoice = function(index){
 	var choiceParameters = snippet.getChoiceParameters(index);
-	console.log(choiceParameters);
+	
+	fetch(choiceParameters.nextSnippet);
+	//TO DO:
+	//1) delegate consequences to State
+	//2) delegate finding new snippet to Locator
 }
 
-/*
-var goTo = function(fileName){
-	
-		TO DO: Delegate to Locator using Snippet data as input?
-		
-		1) If not exiting Scene, fetchJSON(fileName)
-		2) If exiting a scene || act...
-			a) go to correct pathname
-			b) find metadata on act/scene/snippet
-			c) fetchJSON(fileName)
-	
-};*/
 
 var setChoiceListeners = function(){
 	$('.choice').click(function(e){
@@ -68,5 +53,7 @@ var setChoiceListeners = function(){
 }
 
 var insertIntoDocument = function(data) {
-	$("#snippet").html(data);
+	$("#snippet").empty().append(data);
+	//$("#snippet").replaceWith(data);	
+	//$("#snippet").html(data);
 }; 

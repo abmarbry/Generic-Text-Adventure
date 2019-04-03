@@ -1,0 +1,27 @@
+{
+	"body": [
+		"<VARIABLE(Name)> is <VARIABLE(Sassy)>."
+	],
+	"choices": {
+		"isPopulated": false
+	},
+	"variables": {
+		"isPopulated": true,
+		"content": [
+			{
+				"id": "Name",
+				"returnValue": true,
+				"options": {
+				}
+			},
+			{
+				"id": "Sassy",
+				"returnValue": false,
+				"options": {
+					"true": "very sassy",
+					"false": "lacking in sass"
+				}
+			}
+		]
+	}
+}

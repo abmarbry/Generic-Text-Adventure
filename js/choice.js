@@ -2,24 +2,14 @@ function Choice(data){
 	this.consequences = data.consequences;
 	this.body = data.name;
 	this.nextSnippet = data.nextSnippet;
-	
-	if(data.transition.toAct.isPopulated){
-		this.toAct = data.transition.toAct.where;
-	}
-	else{
-		this.toAct = "";
-	}
-	
-	if(data.transition.toScene.isPopulated){
-		this.toScene = data.transition.toScene.where;
-	}
-	else{
-		this.toScene = "";
-	}
+
+	this.nextAct = data.nextAct;
+
+	this.nextScene = data.nextScene;
 }
 
 Choice.prototype.getNextSnippetString = function(){
-	return (this.toAct + "/" + this.toScene + "/" + this.nextSnippet);
+	return (this.nextAct + "/" + this.nextScene + "/" + this.nextSnippet);
 }
 
 Choice.prototype.getConsequences = function(){

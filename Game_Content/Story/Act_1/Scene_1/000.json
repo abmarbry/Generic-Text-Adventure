@@ -11,14 +11,8 @@
 				"id": "0",
 				"name": "Go to second Snippet",
 				"nextSnippet": "001",
-				"transition": {
-					"toScene": {
-						"isPopulated": false
-					},
-					"toAct": {
-						"isPopulated": false
-					}
-				},
+				"nextScene" : "Scene_1",
+				"nextAct" : "Act_1",
 				"consequences": {
 					"Sassy" : false,
 					"Name" : "Non-Sassy Master"
@@ -28,14 +22,8 @@
 				"id": "1",
 				"name": "Go to second Snippet, but make it sassy",
 				"nextSnippet": "001",
-				"transition": {
-					"toScene": {
-						"isPopulated": false
-					},
-					"toAct": {
-						"isPopulated": false
-					}
-				},
+				"nextScene" : "Scene_1",
+				"nextAct" : "Act_1",
 				"consequences": {
 					"Sassy" : true,
 					"Name" : "Sass Master"
