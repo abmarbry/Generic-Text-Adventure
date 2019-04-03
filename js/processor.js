@@ -1,4 +1,5 @@
 import Snippet from "./snippet.js";
+import State from "./state.js";
 import Choice from "./choice.js";
 
 Processor.prototype.translate = function(json){
@@ -36,6 +37,7 @@ Processor.prototype.clear = function(){
 function Processor (){
 	Processor.htmlStrings = [];
 	Processor.snippet = new Snippet();
+	Processor.state = new State();
 	
 	
 	//HELPER FUNCTIONS
@@ -60,8 +62,11 @@ function Processor (){
 				
 				var choice = new Choice(choiceData);
 				Processor.snippet.addHtmlChoice(choice.getNextSnippetString(), choice.getConsequences(), choice.getBody());
+				Processor.state.add(choice.getConsequences());
 			}
 			else if (Processor.isVariable(word)){
+				//var value = Processor.state.getValue()
+				//Processor.processString(json, value);
 				//TO DO: Extract variable, insert into wordFetcher, handleAndInsert again
 			}
 		}
