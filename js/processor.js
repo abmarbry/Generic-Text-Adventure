@@ -25,6 +25,10 @@ Processor.prototype.translate = function(json){
 	*/
 };
 
+Processor.prototype.handleChoice = function(consequences){
+	Processor.state.add(consequences);
+}
+
 Processor.prototype.clear = function(){
 	Processor.htmlStrings = [];
 	Processor.snippet = new Snippet();
@@ -62,7 +66,6 @@ function Processor (){
 				
 				var choice = new Choice(choiceData);
 				Processor.snippet.addHtmlChoice(choice.getNextSnippetString(), choice.getConsequences(), choice.getBody());
-				Processor.state.add(choice.getConsequences());
 			}
 			else if (Processor.isVariable(word)){
 				//var value = Processor.state.getValue()

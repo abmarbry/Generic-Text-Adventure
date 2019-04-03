@@ -36,11 +36,9 @@ var loadSnippet = function(json){
 
 var handleChoice = function(index){
 	var choiceParameters = snippet.getChoiceParameters(index);
+	processor.handleChoice(choiceParameters.consequences);
 	
 	fetch(choiceParameters.nextSnippet);
-	//	TO DO:
-	//	1) delegate consequences to State
-	//X	2) delegate finding new snippet to Locator
 }
 
 

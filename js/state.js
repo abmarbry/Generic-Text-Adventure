@@ -1,7 +1,18 @@
 function State(){
 	this.tuples = [];
 	
-	this.addIfNotPresent = function(){
+	this.addIfNotPresent = function(tuple){
+		var pos = this.tuples.findIndex(function(t){
+			return t.key === tuple.key;
+		});
+		console.log(pos);
+		if(pos === -1){
+			this.tuples.push();
+		}
+		else{
+			//update it
+		}
+		//var present = this.tuples.includes
 		//TO DO
 	}
 	
