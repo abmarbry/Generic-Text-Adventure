@@ -17,12 +17,17 @@ Processor.prototype.translate = function(json){
 		X	1) Fetch word in "body"
 		X	2) If end of String, make paragraph break
 		X		a) If no other Strings in the array, mark exit condition true.
-			3) Else if choice, process choice consequences
+		X	3) Else if choice, process choice consequences
 			4) Else if variable, insert variable accordingly
-			5) Else, normal word, paste accordingly
+		X	5) Else, normal word, paste accordingly
 		X	6) Go to 1) until exit condition is met
 	*/
 };
+
+Processor.prototype.clear = function(){
+	Processor.htmlStrings = [];
+	Processor.snippet = new Snippet();
+}
 
 
 
@@ -30,7 +35,6 @@ Processor.prototype.translate = function(json){
 
 function Processor (){
 	Processor.htmlStrings = [];
-	
 	Processor.snippet = new Snippet();
 	
 	

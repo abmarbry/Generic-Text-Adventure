@@ -22,21 +22,3 @@ function Locator(){
 
 
 export default Locator;
-
-/*
-
-Locator.prototype.parse = function(string){
-}
-
-Locator.changeAct = function(actName){
-}
-
-Locator.changeScene = function(sceneName){
-}
-
-Locator.changeSnippet = function(snippetName){
-}
-
-Locator.getLocation = function(){
-}
-*/

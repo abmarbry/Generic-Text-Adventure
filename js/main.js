@@ -20,7 +20,6 @@ $( document ).ready(function() {
 var fetch = function(pathWithoutExtension){
 	locator.fetchData(pathWithoutExtension).then(function(data){
 		var json = $.parseJSON(data);
-		console.log(json);
 		loadSnippet(json);
 	});
 }
@@ -29,9 +28,8 @@ var fetch = function(pathWithoutExtension){
 var loadSnippet = function(json){
 	snippet = processor.translate(json);
 	
-	console.log(snippet);
-	
 	insertIntoDocument(snippet.getHtml());
+	processor.clear();
 	//TO DO LATER: hopefully modularize the listeners more or something
 	setChoiceListeners();
 };
@@ -40,9 +38,9 @@ var handleChoice = function(index){
 	var choiceParameters = snippet.getChoiceParameters(index);
 	
 	fetch(choiceParameters.nextSnippet);
-	//TO DO:
-	//1) delegate consequences to State
-	//2) delegate finding new snippet to Locator
+	//	TO DO:
+	//	1) delegate consequences to State
+	//X	2) delegate finding new snippet to Locator
 }
 
 
@@ -53,7 +51,5 @@ var setChoiceListeners = function(){
 }
 
 var insertIntoDocument = function(data) {
-	$("#snippet").empty().append(data);
-	//$("#snippet").replaceWith(data);	
-	//$("#snippet").html(data);
+	$("#snippet").html(data);
 }; 
