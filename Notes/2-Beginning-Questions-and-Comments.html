@@ -26,34 +26,25 @@
 					The title of the html file will need to be determined before runtime so that the user's readers could search for the story (as opposed to having it be determined from the very first file in the processor, while I briefly entertained. That would only work if the paged housed a series of stories within a single page. For now the user would just directly enter this into the file, which  requires more CS knowledge but nothing more complex than is already required in this first version.
 				</li>
 				<li>
-					The json document has changed in appearance significantly:
-						<ul>
-							<li>String[] body</li>
-							<li>Object choices</li>
-								<ul>
-									<li>String id</li>
-									<li>String name</li>
-									<li>String nextSnippet</li>
-									<li>Object consequences</li>
-										<ul>
-											(boolean, String, int, etc..) variable assignments
-										</ul>
-								</ul>
-							<li>Object variables</li>
-								<ul>
-									<li>String id</li>
-									<li>Object body</li>
-										<ul>
-											<li>outcome organized by variable value</li>
-										</ul>
-								</ul>
-						</ul>
+					The json document has changed in appearance significantly. I'll have the formatting in another document.
 				</li>
 				<li>
 					Should Processor put the data onto the document as well as translate it? Having to return the HTML results in a higher amount of coupling. However, cohesion states that a class should do only one thing, and having it print to the screen as well is blob-y.
 				</li>
 				<li>
 					It's probably a good idea to delegate file fetching and folder transitioning to another class.
+				</li>
+				<li>
+					Three hours of my life later, and the way that async fetching works in Javascript has made it very difficult to separate the functions in main.js to their own story.js file. I'll have to work on that later.
+				</li>
+				<li>
+					For this prototype, I'll just stick to the state being global. It's going to be tricky having certain states fit into the scopes I originally wanted them to for a couple of reasons:
+						<ul>
+							<li>The system's memoryless nature would make it difficult to keep track of file location.</li>
+							<li>The coupling between Locator and State would have to increase a good deal if implemented.</li>
+							<li>It's possible that the user would want to save the information from that particular scene if they happen to return to it multiple times. </li>
+						</ul>
+					I'll tackle that issue another day.
 				</li>
 			</ul>
 	</body>
