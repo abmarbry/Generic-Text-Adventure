@@ -14,36 +14,43 @@ $( document ).ready(function() {
 	processor = new Processor();
 	locator = new Locator();
 	
-	fetch({
-		nextAct: "Act_1",
-		nextScene: "Scene_1",
-		nextSnippet: "000"
-		});
+	fetch("TITLE");
 	
 });
 
+//TO DO LATER: refactor fetch so that it as a callback function instead of loadSnippet() so the fn doesn't have to be so bulky
 var fetch = function(pathData){
-	var pathWithoutExtension = locator.formatPathData(pathData);
-	
-	locator.fetchData(pathWithoutExtension).then(function(data){
+	locator.fetchData(pathData).then(function(data){
 		var json = $.parseJSON(data);
 		loadSnippet(json);
 	});
 }
-	
 
 var loadSnippet = function(json){
+	
 	snippet = processor.translate(json);
 	
-	insertIntoDocument(snippet.getHtml());
+	
+	if(!snippet.choiceIsOutside){
+		insertIntoSnippet(snippet.getHtml());
+	}
+	else{
+		insertIntoOutside(json.title, json,subtitle, snippet.getHtml());
+	}
+	
 	processor.clear();
 	//TO DO LATER: hopefully modularize the listeners more or something
 	setChoiceListeners();
 };
 
 var handleChoice = function(index){
+	//TO DO LATER: store choice parameters somewhere else so snippet doesn't have to be global
 	var choiceParameters = snippet.getChoiceParameters(index);
 	processor.handleChoice(choiceParameters.consequences);
+	
+	if(!choiceParameters.itOutside()){
+		var pathWithoutExtension = locator.formatPathData(choceParameters.next);
+	}
 	
 	fetch(choiceParameters.next);
 }
@@ -55,6 +62,10 @@ var setChoiceListeners = function(){
 	})
 }
 
-var insertIntoDocument = function(data) {
+var insertIntoSnippet = function(data) {
 	$("#snippet").html(data);
 }; 
+
+var insertIntoSnippet = function(title, subtitle, body){
+	console.log("cool");
+}

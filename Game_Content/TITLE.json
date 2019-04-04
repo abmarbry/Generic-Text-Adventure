@@ -1,7 +1,23 @@
 {
-	"title": "Example Title",
-	"author": "Author",
-	"nextSnippet" : "000",
-	"nextScene": "Scene_1",
-	"nextAct" : "Act_1"
+	"title" : "Example Title",
+	"subtitle": "by Author",
+	"body": [
+		"<CHOICE(thisIsALongerStringThanNormal)>"
+	],
+	"choices": {
+		"isPopulated": true,
+		"content": [
+			{
+				"id": "thisIsALongerStringThanNormal",
+				"name": "Start",
+				"toOutsideSnippet" : false,
+				"nextSnippet": "000",
+				"nextScene" : "Scene_1",
+				"nextAct" : "Act_1",
+				"consequences": {}
+		}]
+	},
+	"variables": {
+		"isPopulated": false
+	}
 }

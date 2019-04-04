@@ -17,11 +17,11 @@ Locator.prototype.fetchData = function(fileExtension){
 }
 
 Locator.prototype.formatPathData = function(data){
-	return data.nextAct + "/" + data.nextScene + "/" + data.nextSnippet;
+	return "Story/" + data.nextAct + "/" + data.nextScene + "/" + data.nextSnippet;
 }
 
 function Locator(){
-	this.BASE_FILE = "../Game_Content/Story/"
+	this.BASE_FILE = "../Game_Content/"
 }
 
 

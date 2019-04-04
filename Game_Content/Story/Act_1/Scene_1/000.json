@@ -10,6 +10,7 @@
 			{
 				"id": "0",
 				"name": "Go to second Snippet",
+				"toOutsideSnippet" : false,
 				"nextSnippet": "001",
 				"nextScene" : "Scene_1",
 				"nextAct" : "Act_1",
@@ -21,6 +22,7 @@
 			{
 				"id": "1",
 				"name": "Go to second Snippet, but make it sassy",
+				"toOutsideSnippet" : false,
 				"nextSnippet": "001",
 				"nextScene" : "Scene_1",
 				"nextAct" : "Act_1",

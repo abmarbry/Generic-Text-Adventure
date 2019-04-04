@@ -55,9 +55,7 @@ function Processor (){
 				
 				var choice = new Choice(choiceData);
 				
-				console.log(choice);
-				
-				Processor.snippet.addHtmlChoice(choice.getNextSnippetData(), choice.getConsequences(), choice.getBody());
+				Processor.snippet.addHtmlChoice(choice.getNextSnippetData(), choice.getConsequences(), choice.getIsOutside(), choice.getBody());
 			}
 			else if (Processor.isVariable(word)){
 			

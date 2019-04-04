@@ -1,10 +1,10 @@
 function Choice(data){
 	this.consequences = data.consequences;
 	this.body = data.name;
+	this.isOutside = data.toOutsideSnippet;
+	
 	this.nextSnippet = data.nextSnippet;
-
 	this.nextAct = data.nextAct;
-
 	this.nextScene = data.nextScene;
 }
 
@@ -14,7 +14,6 @@ Choice.prototype.getNextSnippetData = function(){
 		nextScene : this.nextScene,
 		nextSnippet : this.nextSnippet
 	}
-	//return (this.nextAct + "/" + this.nextScene + "/" + this.nextSnippet);
 }
 
 Choice.prototype.getConsequences = function(){
@@ -23,6 +22,10 @@ Choice.prototype.getConsequences = function(){
 
 Choice.prototype.getBody = function(){
 	return this.body;
+}
+
+Choice.prototype.getIsOutside = function(){
+	return this.isOutside;
 }
 
 export default Choice;

@@ -1,9 +1,20 @@
 {
 	"body": [
-		"<VARIABLE(Name)> is <VARIABLE(Sassy)>."
+		"<VARIABLE(Name)> is <VARIABLE(Sassy)>.",
+		"<CHOICE(A)>"
 	],
 	"choices": {
-		"isPopulated": false
+		"isPopulated": true,
+		"content": [
+			{
+				"id": "A",
+				"name": "The End",
+				"toOutsideSnippet" : true,
+				"nextSnippet": "TITLE",
+				"nextScene" : "",
+				"nextAct" : "",
+				"consequences": {}
+		}]
 	},
 	"variables": {
 		"isPopulated": true,
