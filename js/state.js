@@ -3,17 +3,14 @@ function State(){
 	
 	this.addIfNotPresent = function(tuple){
 		var pos = this.tuples.findIndex(function(t){
-			return t.key === tuple.key;
+			return t.getKey() === tuple.getKey();
 		});
-		console.log(pos);
 		if(pos === -1){
-			this.tuples.push();
+			this.tuples.push(tuple);
 		}
 		else{
-			//update it
+			this.tuples[pos] = tuple.getValue();
 		}
-		//var present = this.tuples.includes
-		//TO DO
 	}
 	
 };
@@ -28,13 +25,19 @@ State.prototype.add = function(values){
 		
 		var tuple = new Tuple(key,value);
 		
-		this.addIfNotPresent();
+		this.addIfNotPresent(tuple);
 	}
 }
 
-State.prototype.get = function(key){
-	//1) find key
-	//2) get value
+State.prototype.getValue = function(key){
+	console.log(key);
+	console.log(this.tuples);	
+	//TO DO LATER: What to return if it's not found
+	var found = this.tuples.find(function(tuple){
+		return tuple.getKey() === key;
+	});
+	
+	return found.getValue();
 }
 
 //TUPLE
@@ -43,12 +46,12 @@ function Tuple(key, value){
 	this.value = value;
 }
 
-Tuple.prototype.getValue = function(){
-	return this.value;
-}
-
 Tuple.prototype.getKey = function(){
 	return this.key;
+}
+
+Tuple.prototype.getValue = function(){
+	return this.value;
 }
 
 Tuple.prototype.setValue = function(newValue){

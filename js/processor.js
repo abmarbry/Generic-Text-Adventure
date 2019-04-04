@@ -56,32 +56,61 @@ function Processor (){
 	
 
 	Processor.handleAndInsert = function(json, word){
-		var parsedHtml = word;
 		
 		//TO DO LATER: Handle if there's a choice / variable in the body, but none in the actual JSON
 		if(Processor.isChoiceOrVariable(word)){
 			if(Processor.isChoice(word)){
 				var id = Processor.findInnerID(word);
-				var choiceData = Processor.findChoiceContent(json.choices.content, id);
+				var choiceData = Processor.findJSONContent(json.choices.content, id);
 				
 				var choice = new Choice(choiceData);
 				Processor.snippet.addHtmlChoice(choice.getNextSnippetString(), choice.getConsequences(), choice.getBody());
 			}
 			else if (Processor.isVariable(word)){
-				//var value = Processor.state.getValue()
-				//Processor.processString(json, value);
-				//TO DO: Extract variable, insert into wordFetcher, handleAndInsert again
+			
+				var id = Processor.findInnerID(word);
+				var value = Processor.state.getValue(id);
+				var variableData = Processor.findJSONContent(json.variables.content, id);
+
+				
+				var body = Processor.processVariable(variableData, value);
+				
+				Processor.processString(json, body);
 			}
 		}
 		else{
-			Processor.snippet.add(parsedHtml);
+			Processor.snippet.add(word);
 		}
+	}
+	
+	Processor.processVariable = function(variable, value){
+		//TO DO LATER: Make less terrible and ugly
+		if(variable.returnValue){
+			return value;
+		}
+		else {
+			var options = variable.options
+			var valueString = value.toString();
+			
+			var optionsWithKey = Object.entries(options);
+			console.log(optionsWithKey);
+			
+			var rightOption = optionsWithKey.find(function(o){
+				return o[0] === valueString;
+			});
+			
+			return rightOption[1];
+
+		}
+
 	}
 	 
 	 
 	Processor.isChoiceOrVariable = function(word){
-		//TO DO LATER: possible fix somewhere for splitting a word if there's a \t or something at the end
-		return (word.charAt(0) === '<' && word.charAt(word.length-1) === '>');
+		//TO DO SOON PLEASE: possible fix somewhere for splitting a word if there's a \t or something at the end
+		var variable;
+		
+		return (word.charAt(0) === '<' && (word.charAt(word.length-1) === '>'||word.charAt(word.length-2) === '>') );
 	}
 	
 
@@ -105,7 +134,7 @@ function Processor (){
 	}
 	
 	
-	Processor.findChoiceContent = function(data, id){
+	Processor.findJSONContent = function(data, id){
 		//TO DO LATER: inefficient, iterates through all choices & doesn't account for name not existing
 		var correct;
 		$.each(data, function(key, value){
