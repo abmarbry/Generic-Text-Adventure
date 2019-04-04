@@ -1,2 +1,5 @@
 # Example Data #
 *.json
+
+# Personal Notes Directory #
+Notes/
