@@ -38,7 +38,9 @@ Processor.prototype.clear = function(){
 }
 
 Processor.prototype.clearState = function(){
-	Processor.state = new State();
+	if(Processor.state.getLength() > 0){
+		Processor.state = new State();
+	}
 }
 
 

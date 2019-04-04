@@ -38,6 +38,10 @@ State.prototype.getValue = function(key){
 	return found.getValue();
 }
 
+State.prototype.getLength = function(){
+	return this.tuples.length;
+}
+
 //TUPLE
 function Tuple(key, value){
 	this.key = key;
