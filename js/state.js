@@ -30,11 +30,11 @@ State.prototype.add = function(values){
 }
 
 State.prototype.getValue = function(key){
+	
 	//TO DO LATER: What to return if it's not found
 	var found = this.tuples.find(function(tuple){
 		return tuple.getKey() === key;
 	});
-	
 	return found.getValue();
 }
 

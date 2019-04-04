@@ -34,7 +34,7 @@ var loadSnippet = function(json, isOutside){
 		insertIntoSnippet(snippet.getHtml());
 	}
 	else{
-		insertIntoOutside(json.title, json.subtitle, snippet.getHtml());
+		insertIntoOutsideSnippet(json.title, json.subtitle, snippet.getHtml());
 	}
 	
 	processor.clear();
@@ -47,11 +47,18 @@ var handleChoice = function(index){
 	var choiceParameters = snippet.getChoiceParameters(index);
 	processor.handleChoice(choiceParameters.consequences);
 	
-	if(!choiceParameters.isOutside()){
-		var pathWithoutExtension = locator.formatPathData(choceParameters.next);
+	var pathWithoutExtension;
+	
+	if(!choiceParameters.isOutside){
+		pathWithoutExtension = locator.formatPathData(choiceParameters.next);
+	}
+	else{
+		//TO DO LATER: do something different if there's a save state implemented
+		processor.clearState();
+		pathWithoutExtension = choiceParameters.next.nextSnippet
 	}
 	
-	fetch(choiceParameters.next, choiceParameters.isOutside());
+	fetch(pathWithoutExtension, choiceParameters.isOutside);
 }
 
 
@@ -65,6 +72,8 @@ var insertIntoSnippet = function(data) {
 	$("#snippet").html(data);
 }; 
 
-var insertIntoOutside = function(title, subtitle, body){
-	console.log(title + " " + subtitle + " " + body);
+var insertIntoOutsideSnippet = function(title, subtitle, body){
+	var outsideHTML = processor.outsideDataToHtml(title, subtitle);
+	
+	insertIntoSnippet(outsideHTML + body);
 }

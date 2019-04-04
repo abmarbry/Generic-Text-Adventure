@@ -19,9 +19,26 @@ Processor.prototype.handleChoice = function(consequences){
 	Processor.state.add(consequences);
 }
 
+Processor.prototype.outsideDataToHtml = function(title, subtitle){
+	
+	var body = "";
+	
+	if(title.length > 0){
+		body += "<div class='title'>" + title + "</div>";
+	}
+	if(subtitle.length > 0){
+		body += "<div class='subtitle'>" + subtitle + "</div>";
+	}
+	
+	return body;
+}
+
 Processor.prototype.clear = function(){
-	Processor.htmlStrings = [];
 	Processor.snippet = new Snippet();
+}
+
+Processor.prototype.clearState = function(){
+	Processor.state = new State();
 }
 
 
@@ -29,7 +46,6 @@ Processor.prototype.clear = function(){
 
 
 function Processor (){
-	Processor.htmlStrings = [];
 	Processor.snippet = new Snippet();
 	Processor.state = new State();
 	
@@ -49,8 +65,10 @@ function Processor (){
 		
 		//TO DO LATER: Handle if there's a choice / variable in the body, but none in the actual JSON
 		if(Processor.isChoiceOrVariable(word)){
+			var id = Processor.findInnerID(word);
+			
 			if(Processor.isChoice(word)){
-				var id = Processor.findInnerID(word);
+				
 				var choiceData = Processor.findJSONContent(json.choices.content, id);
 				
 				var choice = new Choice(choiceData);
@@ -58,12 +76,8 @@ function Processor (){
 				Processor.snippet.addHtmlChoice(choice.getNextSnippetData(), choice.getConsequences(), choice.getIsOutside(), choice.getBody());
 			}
 			else if (Processor.isVariable(word)){
-			
-				var id = Processor.findInnerID(word);
 				var value = Processor.state.getValue(id);
 				var variableData = Processor.findJSONContent(json.variables.content, id);
-
-				
 				var body = Processor.processVariable(variableData, value);
 				
 				Processor.processString(json, body);
@@ -153,6 +167,7 @@ WordFetcher.prototype.next = function(){
 	var string = this.string;
 	
 	while(!wordFound && pos < string.length) {
+		
 		var c = string.charAt(pos);
 		if(c === ' '){
 			pos++;
