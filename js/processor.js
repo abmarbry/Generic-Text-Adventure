@@ -13,16 +13,6 @@ Processor.prototype.translate = function(json){
 	}
 	
 	return Processor.snippet;
-	
-	/*
-		X	1) Fetch word in "body"
-		X	2) If end of String, make paragraph break
-		X		a) If no other Strings in the array, mark exit condition true.
-		X	3) Else if choice, process choice consequences
-			4) Else if variable, insert variable accordingly
-		X	5) Else, normal word, paste accordingly
-		X	6) Go to 1) until exit condition is met
-	*/
 };
 
 Processor.prototype.handleChoice = function(consequences){
@@ -93,7 +83,6 @@ function Processor (){
 			var valueString = value.toString();
 			
 			var optionsWithKey = Object.entries(options);
-			console.log(optionsWithKey);
 			
 			var rightOption = optionsWithKey.find(function(o){
 				return o[0] === valueString;
