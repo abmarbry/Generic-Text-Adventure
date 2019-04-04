@@ -10,7 +10,7 @@
 				"id": "A",
 				"name": "The End",
 				"toOutsideSnippet" : true,
-				"nextSnippet": "TITLE",
+				"nextSnippet": "END",
 				"nextScene" : "",
 				"nextAct" : "",
 				"consequences": {}
