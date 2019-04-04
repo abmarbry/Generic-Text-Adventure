@@ -54,7 +54,10 @@ function Processor (){
 				var choiceData = Processor.findJSONContent(json.choices.content, id);
 				
 				var choice = new Choice(choiceData);
-				Processor.snippet.addHtmlChoice(choice.getNextSnippetString(), choice.getConsequences(), choice.getBody());
+				
+				console.log(choice);
+				
+				Processor.snippet.addHtmlChoice(choice.getNextSnippetData(), choice.getConsequences(), choice.getBody());
 			}
 			else if (Processor.isVariable(word)){
 			

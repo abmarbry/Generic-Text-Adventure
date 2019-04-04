@@ -8,8 +8,13 @@ function Choice(data){
 	this.nextScene = data.nextScene;
 }
 
-Choice.prototype.getNextSnippetString = function(){
-	return (this.nextAct + "/" + this.nextScene + "/" + this.nextSnippet);
+Choice.prototype.getNextSnippetData = function(){
+	return {
+		nextAct : this.nextAct,
+		nextScene : this.nextScene,
+		nextSnippet : this.nextSnippet
+	}
+	//return (this.nextAct + "/" + this.nextScene + "/" + this.nextSnippet);
 }
 
 Choice.prototype.getConsequences = function(){

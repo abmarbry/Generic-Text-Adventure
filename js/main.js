@@ -13,11 +13,18 @@ $( document ).ready(function() {
 	//TO DO: Remove constant when logic for finding files is implemented
 	processor = new Processor();
 	locator = new Locator();
-	fetch("Act_1/Scene_1/000");
+	
+	fetch({
+		nextAct: "Act_1",
+		nextScene: "Scene_1",
+		nextSnippet: "000"
+		});
 	
 });
 
-var fetch = function(pathWithoutExtension){
+var fetch = function(pathData){
+	var pathWithoutExtension = locator.formatPathData(pathData);
+	
 	locator.fetchData(pathWithoutExtension).then(function(data){
 		var json = $.parseJSON(data);
 		loadSnippet(json);
@@ -38,7 +45,7 @@ var handleChoice = function(index){
 	var choiceParameters = snippet.getChoiceParameters(index);
 	processor.handleChoice(choiceParameters.consequences);
 	
-	fetch(choiceParameters.nextSnippet);
+	fetch(choiceParameters.next);
 }
 
 

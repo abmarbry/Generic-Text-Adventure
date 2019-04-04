@@ -1,6 +1,6 @@
 function Snippet(){
 	this.htmlStrings = [];
-	this.choiceNextSnippet = [];
+	this.choiceNext = [];
 	this.choiceConsequences = [];
 	
 	this.addChoiceHtmlString = function(index, body){
@@ -9,16 +9,16 @@ function Snippet(){
 	}
 }
 
-Snippet.prototype.addHtmlChoice = function(nextSnippet, consequences, body){
-	this.choiceNextSnippet.push(nextSnippet);
+Snippet.prototype.addHtmlChoice = function(next, consequences, body){
+	this.choiceNext.push(next);
 	this.choiceConsequences.push(consequences);
 	//TO DO LATER: Handle if somehow they don't have the same length
-	var index = this.choiceNextSnippet.length-1;
+	var index = this.choiceNext.length-1;
 	this.addChoiceHtmlString(index, body);
 }
 
 Snippet.prototype.getChoiceParameters = function(index){
-	return {nextSnippet: this.choiceNextSnippet[index],
+	return {next: this.choiceNext[index],
 			consequences: this.choiceConsequences[index]};
 }
 
@@ -27,7 +27,7 @@ Snippet.prototype.add = function(string){
 }
 
 Snippet.prototype.addBreak = function(){
-	this.htmlStrings.push("</br></br>");
+	this.htmlStrings.push("<br><br>");
 }
 
 
