@@ -14,28 +14,27 @@ $( document ).ready(function() {
 	processor = new Processor();
 	locator = new Locator();
 	
-	fetch("TITLE");
+	fetch("TITLE", true);
 	
 });
 
 //TO DO LATER: refactor fetch so that it as a callback function instead of loadSnippet() so the fn doesn't have to be so bulky
-var fetch = function(pathData){
+var fetch = function(pathData, isOutside){
 	locator.fetchData(pathData).then(function(data){
 		var json = $.parseJSON(data);
-		loadSnippet(json);
+		loadSnippet(json, isOutside);
 	});
 }
 
-var loadSnippet = function(json){
+var loadSnippet = function(json, isOutside){
 	
 	snippet = processor.translate(json);
-	
-	
-	if(!snippet.choiceIsOutside){
+
+	if(!isOutside){
 		insertIntoSnippet(snippet.getHtml());
 	}
 	else{
-		insertIntoOutside(json.title, json,subtitle, snippet.getHtml());
+		insertIntoOutside(json.title, json.subtitle, snippet.getHtml());
 	}
 	
 	processor.clear();
@@ -48,11 +47,11 @@ var handleChoice = function(index){
 	var choiceParameters = snippet.getChoiceParameters(index);
 	processor.handleChoice(choiceParameters.consequences);
 	
-	if(!choiceParameters.itOutside()){
+	if(!choiceParameters.isOutside()){
 		var pathWithoutExtension = locator.formatPathData(choceParameters.next);
 	}
 	
-	fetch(choiceParameters.next);
+	fetch(choiceParameters.next, choiceParameters.isOutside());
 }
 
 
@@ -66,6 +65,6 @@ var insertIntoSnippet = function(data) {
 	$("#snippet").html(data);
 }; 
 
-var insertIntoSnippet = function(title, subtitle, body){
-	console.log("cool");
+var insertIntoOutside = function(title, subtitle, body){
+	console.log(title + " " + subtitle + " " + body);
 }
