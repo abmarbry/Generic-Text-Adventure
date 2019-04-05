@@ -3,7 +3,8 @@
 }
 
 .padding{
-    padding: 4rem;
+    padding: 6rem;
+    line-height: 2rem;
 }
 
 .title{
@@ -19,6 +20,7 @@
 
 .choice{
 	color: teal;
+	font-weight: bold;
 }
 
 .choice:hover{
