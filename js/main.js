@@ -8,9 +8,7 @@ var processor;
 var locator;
 
 $( document ).ready(function() {
-	
-	//TO DO: Determine first JSON document to be fetched, add as parameter
-	//TO DO: Remove constant when logic for finding files is implemented
+
 	processor = new Processor();
 	locator = new Locator();
 	
@@ -18,7 +16,7 @@ $( document ).ready(function() {
 	
 });
 
-//TO DO LATER: refactor fetch so that it as a callback function instead of loadSnippet() so the fn doesn't have to be so bulky
+//TO DO LATER: refactor
 var fetch = function(pathData, isOutside){
 	locator.fetchData(pathData).then(function(data){
 		var json = $.parseJSON(data);
@@ -38,7 +36,6 @@ var loadSnippet = function(json, isOutside){
 	}
 	
 	processor.clear();
-	//TO DO LATER: hopefully modularize the listeners more or something
 	setChoiceListeners();
 };
 
