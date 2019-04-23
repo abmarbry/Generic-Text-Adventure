@@ -11,12 +11,18 @@ function Snippet(){
 }
 
 Snippet.prototype.addHtmlChoice = function(next, consequences, isOutside, body){
+
 	this.choiceNext.push(next);
 	this.choiceConsequences.push(consequences);
 	this.choiceIsOutside.push(isOutside);
-	//TO DO LATER: Handle if somehow they don't have the same length
-	var index = this.choiceNext.length-1;
-	this.addChoiceHtmlString(index, body);
+	
+	if((this.choiceNext.length === this.choiceConsequences.length) && (this.choiceConsequences.length === this.choiceIsOutside.length)){
+		var index = this.choiceNext.length-1;
+		this.addChoiceHtmlString(index, body);
+	}
+	else{
+		//Throw error
+	}
 }
 
 Snippet.prototype.getChoiceParameters = function(index){
