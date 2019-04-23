@@ -20,17 +20,6 @@ function State(){
 		else{
 			this.tuples[pos].setValue(tuple.getValue());
 		}
-		
-		/*
-		var pos = this.tuples.findIndex(function(t){
-			return t.getKey() === tuple.getKey();
-		});
-		if(pos === -1 || pos === false){
-			this.tuples.push(tuple);
-		}
-		else{
-			this.tuples[pos] = tuple.getValue();
-		}*/
 	}
 	
 };
@@ -66,15 +55,10 @@ State.prototype.getValue = function(key){
 		}
 		
 		if(!found){
-			//???
+			//:^(
 		}
 		
 		return value;
-	/*
-	var found = this.tuples.find(function(tuple){
-		return tuple.getKey() === key;
-	});
-	return found.getValue();*/
 }
 
 State.prototype.getLength = function(){
