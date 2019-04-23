@@ -160,13 +160,6 @@ function Processor (){
 			}
 		}
 		return correct;
-		/*
-		$.each(data, function(key, value){
-			if(value.id === id){
-				correct = value;
-			}
-		});
-		return correct;*/
 	}
 	
 };
