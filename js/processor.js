@@ -71,8 +71,9 @@ function Processor (){
 		//TO DO LATER: Handle if there's a choice / variable in the body, but none in the actual JSON
 		
 		if(Processor.containsVar(word)){
-			var atomizer = new Atomizer(word);
-			var result = atomizer.get();
+			//TO DO LATER: Decide if it's better to pass Atomizer as parameter or generate new one each function call
+			var atomizer = new Atomizer();
+			var result = atomizer.get(word);
 			
 			console.log(result)
 			
@@ -225,18 +226,17 @@ WordFetcher.prototype.isEmpty = function(){
 
 
 //ATOMIZER
-function Atomizer(string){
-	this.string = string;
-	this.pos = 0;
-	this.result = {};
-	this.result.body = [];
-	this.result.type = [];
+function Atomizer(){
 }
 
-Atomizer.prototype.get = function(){
+Atomizer.prototype.get = function(string){
 	//TO DO LATER: Refactor
-	var pos = this.pos;
-	var string = this.string;
+	
+	var result = {};
+	result.body = [];
+	result.type = [];
+	
+	var pos = 0;
 	var endPos = pos;
 	
 	while(pos < string.length){
@@ -266,7 +266,7 @@ Atomizer.prototype.get = function(){
 		
 		var substring = string.substring(pos, endPos);
 		
-		this.result.body.push(substring);
+		result.body.push(substring);
 		
 		if(varFound){
 			//TO DO: Fix magic variables
@@ -282,23 +282,21 @@ Atomizer.prototype.get = function(){
 		}
 		
 		if(varFound){
-			this.result.type.push(varText);
+			result.type.push(varText);
 		}
 		else{
-			this.result.type.push("NONE");
+			result.type.push("NONE");
 		}
 		
 		pos = endPos;
 	}
-	return this.result;
+	
+	console.log(result);
+	return result;
 	
 
 }
-
-Atomizer.prototype.isEmpty = function(){
-	return !(this.pos < this.string.length);
-}
-//VAR EXTRACT END
+//ATOMIZER END
  
 
 export default Processor;
