@@ -35,6 +35,11 @@ Snippet.prototype.add = function(string){
 	this.htmlStrings.push(string);
 }
 
+Snippet.prototype.addToWord = function(string){
+	var prevString = this.htmlStrings.pop();
+	this.htmlStrings.push(prevString + string);
+}
+
 Snippet.prototype.startParagraph = function(){
 	this.htmlStrings.push("<p>");
 }

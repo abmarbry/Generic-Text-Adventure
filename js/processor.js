@@ -86,6 +86,7 @@ function Processor (){
 						
 					var choice = new Choice(choiceData);
 					//TO DO LATER: A choice should be able to process any possible variable text that's within it.
+					//TO DO LATER: I'm still not sure if someone should be able to add a choice to a word
 					Processor.snippet.addHtmlChoice(choice.getNextSnippetData(), choice.getConsequences(), choice.getIsOutside(), choice.getBody());
 				}
 				else if (result.type[pos] === "VARIABLE"){
@@ -98,7 +99,12 @@ function Processor (){
 					Processor.processString(json, body);
 				}
 				else{
-					Processor.snippet.add(result.body[pos]);
+					if(pos === 0){
+						Processor.snippet.add(result.body[pos]);
+					}
+					else{
+						Processor.snippet.addToWord(result.body[pos]);
+					}
 				}
 		}
 		}
@@ -127,8 +133,6 @@ function Processor (){
 	 
 	 
 	Processor.containsVar = function(word){
-		//TO DO: Determine if there's punctuation at the end and handle that separately
-		//TO DO SOON PLEASE: possible fix somewhere for splitting a word if there's a \t or something at the end
 		return word.indexOf("<CHOICE(") !== -1 || word.indexOf("<VARIABLE(") !== -1;
 	}
 	
