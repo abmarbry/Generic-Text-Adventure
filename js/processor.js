@@ -69,27 +69,37 @@ function Processor (){
 	Processor.handleAndInsert = function(json, word){
 		
 		//TO DO LATER: Handle if there's a choice / variable in the body, but none in the actual JSON
-		if(Processor.isChoiceOrVariable(word)){
-			var id = Processor.findInnerID(word);
-			if(Processor.isChoice(word)){
-				
-				var choiceData = Processor.findJSONContent(json.choices.content, id);
-				
-				var choice = new Choice(choiceData);
-				
-				Processor.snippet.addHtmlChoice(choice.getNextSnippetData(), choice.getConsequences(), choice.getIsOutside(), choice.getBody());
-			}
-			else if (Processor.isVariable(word)){
-				
-				var value = Processor.state.getValue(id);
-				var variableData = Processor.findJSONContent(json.variables.content, id);
-				var body = Processor.processVariable(variableData, value);
-				
-				Processor.processString(json, body);
-			}
+		
+		if(Processor.containsVar(word)){
+			var atomizer = new Atomizer(word);
+			var result = atomizer.get();
+			
+			console.log(result)
+			
+			let pos;
+			for(pos = 0; pos < result.body.length; pos++){
+				if(result.type[pos] === "CHOICE"){
+					var id = Processor.findInnerID(result.body[pos]);
+						
+					var choiceData = Processor.findJSONContent(json.choices.content, id);
+						
+					var choice = new Choice(choiceData);
+					//TO DO LATER: A choice should be able to process any possible variable text that's within it.
+					Processor.snippet.addHtmlChoice(choice.getNextSnippetData(), choice.getConsequences(), choice.getIsOutside(), choice.getBody());
+				}
+				else if (result.type[pos] === "VARIABLE"){
+					var id = Processor.findInnerID(result.body[pos]);
+						
+					var value = Processor.state.getValue(id);
+					var variableData = Processor.findJSONContent(json.variables.content, id);
+					var body = Processor.processVariable(variableData, value);
+						
+					Processor.processString(json, body);
+				}
+				else{
+					Processor.snippet.add(result.body[pos]);
+				}
 		}
-		else{
-			Processor.snippet.add(word);
 		}
 	}
 	
@@ -115,12 +125,10 @@ function Processor (){
 	}
 	 
 	 
-	Processor.isChoiceOrVariable = function(word){
+	Processor.containsVar = function(word){
 		//TO DO: Determine if there's punctuation at the end and handle that separately
 		//TO DO SOON PLEASE: possible fix somewhere for splitting a word if there's a \t or something at the end
-		var variable;
-		
-		return (word.charAt(0) === '<' && (word.charAt(word.length-1) === '>'||word.charAt(word.length-2) === '>') );
+		return word.indexOf("<CHOICE(") !== -1 || word.indexOf("<VARIABLE(") !== -1;
 	}
 	
 
@@ -145,8 +153,6 @@ function Processor (){
 	
 	
 	Processor.findJSONContent = function(data, id){
-		//TO DO LATER: inefficient, iterates through all choices & doesn't account for name not existing
-
 		var correct;
 		var found = false;
 		var pos = 0;
@@ -213,6 +219,86 @@ WordFetcher.prototype.isEmpty = function(){
 	return !(this.pos < this.string.length);
 }
 //WORD FETCHER END
+
+
+
+
+
+//ATOMIZER
+function Atomizer(string){
+	this.string = string;
+	this.pos = 0;
+	this.result = {};
+	this.result.body = [];
+	this.result.type = [];
+}
+
+Atomizer.prototype.get = function(){
+	//TO DO LATER: Refactor
+	var pos = this.pos;
+	var string = this.string;
+	var endPos = pos;
+	
+	while(pos < string.length){
+		var varFound = false;
+		var varText = "";
+		var endPoint = false;
+		
+		while(!endPoint && endPos < string.length) {
+			//TO DO: Infinite loop bug if string ends in space?
+			var c = string.charAt(endPos);
+			if(c === '<'){
+				if(!varFound && endPos===pos){
+					varFound = true;
+				}
+				else {
+					endPoint = true;
+				}
+			}
+			else if(c === '>'){
+				if(varFound){
+					endPoint = true;
+				}
+			}
+			
+			endPos++;
+		}
+		
+		var substring = string.substring(pos, endPos);
+		
+		this.result.body.push(substring);
+		
+		if(varFound){
+			//TO DO: Fix magic variables
+			if(substring.includes("VARIABLE")){
+				varText = "VARIABLE";
+			}
+			else if(substring.includes("CHOICE")){
+				varText = "CHOICE";
+			}
+			else{
+				varFound = false;
+			}
+		}
+		
+		if(varFound){
+			this.result.type.push(varText);
+		}
+		else{
+			this.result.type.push("NONE");
+		}
+		
+		pos = endPos;
+	}
+	return this.result;
+	
+
+}
+
+Atomizer.prototype.isEmpty = function(){
+	return !(this.pos < this.string.length);
+}
+//VAR EXTRACT END
  
 
 export default Processor;
