@@ -69,44 +69,39 @@ function Processor (){
 	Processor.handleAndInsert = function(json, word){
 		
 		//TO DO LATER: Handle if there's a choice / variable in the body, but none in the actual JSON
+		//TO DO LATER: Decide if it's better to pass Atomizer as parameter or generate new one each function call
+		var atomizer = new Atomizer();
+		var result = atomizer.get(word);
+		let pos;
 		
-		if(Processor.containsVar(word)){
-			//TO DO LATER: Decide if it's better to pass Atomizer as parameter or generate new one each function call
-			var atomizer = new Atomizer();
-			var result = atomizer.get(word);
-			
-			console.log(result)
-			
-			let pos;
-			for(pos = 0; pos < result.body.length; pos++){
-				if(result.type[pos] === "CHOICE"){
-					var id = Processor.findInnerID(result.body[pos]);
+		for(pos = 0; pos < result.body.length; pos++){
+			if(result.type[pos] === "CHOICE"){
+				var id = Processor.findInnerID(result.body[pos]);
+					
+				var choiceData = Processor.findJSONContent(json.choices.content, id);
+					
+				var choice = new Choice(choiceData);
+				//TO DO LATER: A choice should be able to process any possible variable text that's within it.
+				//TO DO LATER: I'm still not sure if someone should be able to add a choice to a word
+				Processor.snippet.addHtmlChoice(choice.getNextSnippetData(), choice.getConsequences(), choice.getIsOutside(), choice.getBody());
+			}
+			else if(result.type[pos] === "VARIABLE"){
+				var id = Processor.findInnerID(result.body[pos]);
+					
+				var value = Processor.state.getValue(id);
+				var variableData = Processor.findJSONContent(json.variables.content, id);
+				var body = Processor.processVariable(variableData, value);
 						
-					var choiceData = Processor.findJSONContent(json.choices.content, id);
-						
-					var choice = new Choice(choiceData);
-					//TO DO LATER: A choice should be able to process any possible variable text that's within it.
-					//TO DO LATER: I'm still not sure if someone should be able to add a choice to a word
-					Processor.snippet.addHtmlChoice(choice.getNextSnippetData(), choice.getConsequences(), choice.getIsOutside(), choice.getBody());
-				}
-				else if (result.type[pos] === "VARIABLE"){
-					var id = Processor.findInnerID(result.body[pos]);
-						
-					var value = Processor.state.getValue(id);
-					var variableData = Processor.findJSONContent(json.variables.content, id);
-					var body = Processor.processVariable(variableData, value);
-						
-					Processor.processString(json, body);
+				Processor.processString(json, body);
+			}
+			else{
+				if(pos === 0){
+					Processor.snippet.add(result.body[pos]);
 				}
 				else{
-					if(pos === 0){
-						Processor.snippet.add(result.body[pos]);
-					}
-					else{
-						Processor.snippet.addToWord(result.body[pos]);
-					}
+					Processor.snippet.addToWord(result.body[pos]);
 				}
-		}
+			}
 		}
 	}
 	
@@ -132,7 +127,7 @@ function Processor (){
 	}
 	 
 	 
-	Processor.containsVar = function(word){
+	Processor.containsVariableOrChoice = function(word){
 		return word.indexOf("<CHOICE(") !== -1 || word.indexOf("<VARIABLE(") !== -1;
 	}
 	
@@ -294,8 +289,6 @@ Atomizer.prototype.get = function(string){
 		
 		pos = endPos;
 	}
-	
-	console.log(result);
 	return result;
 	
 
