@@ -184,13 +184,12 @@ WordFetcher.prototype.next = function(){
 	var wordFound = false;
 	var pos = this.pos;
 	var string = this.string;
+	var c = '';
 	
 	while(!wordFound && pos < string.length) {
-		//TO DO: Infinite loop bug if string ends in space?
-		var c = string.charAt(pos);
+		c = string.charAt(pos);
 		if(c === ' '){
 			pos++;
-			c = string.charAt(pos);
 		}
 		else {
 			wordFound = true;
@@ -198,11 +197,13 @@ WordFetcher.prototype.next = function(){
 	}
 	
 	if(!wordFound){
+		this.pos = this.string.length;
 		return "";
 	}
 	else{
 		var end = pos;
 		c = string.charAt(end);
+		
 		while(c !== ' ' && end < string.length){
 			end++;
 			c = string.charAt(end);
