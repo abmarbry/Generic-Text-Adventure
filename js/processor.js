@@ -125,25 +125,7 @@ function Processor (){
 		}
 
 	}
-	 
-	 
-	Processor.containsVariableOrChoice = function(word){
-		//TO DO LATER: Get rid of magic strings
-		return word.indexOf("<CHOICE(") !== -1 || word.indexOf("<VARIABLE(") !== -1;
-	}
-	
 
-	Processor.isChoice = function(word){
-		var bigWord = word.toUpperCase();
-		return (bigWord.indexOf("CHOICE") !== -1); 
-	}
-	
-
-	Processor.isVariable = function(word){
-		var bigWord = word.toUpperCase();
-		return (bigWord.indexOf("VARIABLE") !== -1); 
-	}
-	
 	
 	Processor.findInnerID = function(word){
 		var start = word.indexOf("(")+1;
@@ -272,7 +254,6 @@ Atomizer.prototype.get = function(string){
 		result.body.push(substring);
 		
 		if(varFound){
-			//TO DO: Fix magic variables
 			if(substring.includes(this.VARIABLE)){
 				varText = this.VARIABLE;
 			}
