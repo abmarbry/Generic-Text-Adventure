@@ -75,7 +75,7 @@ function Processor (){
 		let pos;
 		
 		for(pos = 0; pos < result.body.length; pos++){
-			if(result.type[pos] === "CHOICE"){
+			if(result.type[pos] === atomizer.CHOICE){
 				var id = Processor.findInnerID(result.body[pos]);
 					
 				var choiceData = Processor.findJSONContent(json.choices.content, id);
@@ -85,7 +85,7 @@ function Processor (){
 				//TO DO LATER: I'm still not sure if someone should be able to add a choice to a word
 				Processor.snippet.addHtmlChoice(choice.getNextSnippetData(), choice.getConsequences(), choice.getIsOutside(), choice.getBody());
 			}
-			else if(result.type[pos] === "VARIABLE"){
+			else if(result.type[pos] === atomizer.VARIABLE){
 				var id = Processor.findInnerID(result.body[pos]);
 					
 				var value = Processor.state.getValue(id);
@@ -128,6 +128,7 @@ function Processor (){
 	 
 	 
 	Processor.containsVariableOrChoice = function(word){
+		//TO DO LATER: Get rid of magic strings
 		return word.indexOf("<CHOICE(") !== -1 || word.indexOf("<VARIABLE(") !== -1;
 	}
 	
@@ -227,6 +228,9 @@ WordFetcher.prototype.isEmpty = function(){
 
 //ATOMIZER
 function Atomizer(){
+	this.VARIABLE = "VARIABLE";
+	this.CHOICE = "CHOICE";
+	this.NORMAL = "NORMAL"
 }
 
 Atomizer.prototype.get = function(string){
@@ -245,7 +249,6 @@ Atomizer.prototype.get = function(string){
 		var endPoint = false;
 		
 		while(!endPoint && endPos < string.length) {
-			//TO DO: Infinite loop bug if string ends in space?
 			var c = string.charAt(endPos);
 			if(c === '<'){
 				if(!varFound && endPos===pos){
@@ -270,11 +273,11 @@ Atomizer.prototype.get = function(string){
 		
 		if(varFound){
 			//TO DO: Fix magic variables
-			if(substring.includes("VARIABLE")){
-				varText = "VARIABLE";
+			if(substring.includes(this.VARIABLE)){
+				varText = this.VARIABLE;
 			}
-			else if(substring.includes("CHOICE")){
-				varText = "CHOICE";
+			else if(substring.includes(this.CHOICE)){
+				varText = this.CHOICE;
 			}
 			else{
 				varFound = false;
@@ -285,7 +288,7 @@ Atomizer.prototype.get = function(string){
 			result.type.push(varText);
 		}
 		else{
-			result.type.push("NONE");
+			result.type.push(this.NORMAL);
 		}
 		
 		pos = endPos;
